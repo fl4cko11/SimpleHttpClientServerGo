@@ -10,18 +10,11 @@ import (
 	"net/http"
 )
 
-func StartServer(s *Server) {
+func StartServer(s *Server, cfgServer *config.ServerConfig) {
 	if s == nil {
 		fmt.Println("Некорреткная переменная сервера")
 		return
 	}
-
-	cfgServer, err1 := config.LoadServerConfig("config/serverConfig.yaml")
-	if err1 != nil {
-		fmt.Println("Ошибка открытия лога в сервере", err1)
-		return
-	}
-	fmt.Println("ServerConfig:", cfgServer)
 
 	http.HandleFunc("/endpoint", func(resp http.ResponseWriter, req *http.Request) {
 		procTime := rand.Intn(490) + 10 // Задаём время обработки
@@ -35,7 +28,7 @@ func StartServer(s *Server) {
 			return
 		}
 
-		if s.readToMemory(bodyBytes) { // читаем эффективно в память
+		if s.readToMemory(bodyBytes, cfgServer) { // читаем эффективно в память
 			serverMetrics(s, procTime, s.checkDuplicate())
 
 			var decodedJson []config.JSONStruct // для декодирования JSON

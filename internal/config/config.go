@@ -18,6 +18,7 @@ type JSONStruct struct {
 type ServerConfig struct {
 	Url        string `yaml:"url"`
 	LogStorage string `yaml:"logs_storage"`
+	MemorySize int    `yaml:"memory_size"`
 }
 
 type ClientConfig struct {

@@ -1,11 +1,11 @@
 package server
 
 import (
+	"ClientServerCP/internal/config"
 	"bytes"
 )
 
 const RAMSize = 1000
-const BufferSize = 1024
 
 type Server struct {
 	NumOfProcessed  int
@@ -28,8 +28,8 @@ func (s *Server) countAvgProcTime(ProcTime int) {
 	s.AvgTime = s.SumTime / s.NumOfProcessed
 }
 
-func (s *Server) readToMemory(BodyBites []byte) bool {
-	if len(s.RequestsMemory) >= RAMSize { // Проверка переполнения
+func (s *Server) readToMemory(BodyBites []byte, cfgServer *config.ServerConfig) bool {
+	if len(s.RequestsMemory) >= cfgServer.MemorySize { // Проверка переполнения
 		s.RequestsMemory = s.RequestsMemory[:len(s.RequestsMemory)-1] // Удаляем самый новый элемент
 	}
 	s.RequestsMemory = append(s.RequestsMemory, BodyBites) // Добавляем новый запрос в RequestsMemory

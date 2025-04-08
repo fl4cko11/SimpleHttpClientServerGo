@@ -5,28 +5,13 @@ import (
 	"ClientServerCP/internal/jsonGenerator"
 	"ClientServerCP/logs"
 	"bytes"
-	"fmt"
 	"math/rand"
 	"net/http"
 	"time"
 )
 
-func StartPeriodicHttpReqs() {
+func StartPeriodicHttpReqs(cfgServer *config.ServerConfig, cfgClient *config.ClientConfig) {
 	client := &http.Client{}
-
-	cfgServer, err := config.LoadServerConfig("config/serverConfig.yaml")
-	if err != nil {
-		fmt.Println("Ошибка чтения лога в клиенте\n", err)
-		return
-	}
-	fmt.Println("ServerConfig:", cfgServer)
-
-	cfgClient, err1 := config.LoadClientConfig("config/clientConfig.yaml")
-	if err1 != nil {
-		fmt.Println("Ошибка чтения лога в клиенте\n", err1)
-		return
-	}
-	fmt.Println("ClientConfig:", cfgClient)
 
 	count := 0
 	sleepTime := generateSleepTime()
