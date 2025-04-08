@@ -1,2 +1,2 @@
 logs_storage: "logs/clientLogs.txt"
-period: 100
+period: 100 # период отправки дубликата

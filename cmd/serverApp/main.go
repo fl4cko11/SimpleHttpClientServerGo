@@ -14,6 +14,6 @@ func main() {
 	}
 	fmt.Println("ServerConfig:", cfgServer)
 
-	s := &server.Server{NumOfProcessed: 0, NumOfDuplicates: 0, SumTime: 0, AvgTime: 0, RequestsMemory: make([][]byte, cfgServer.MemorySize)}
+	s := &server.Server{NumOfProcessed: 0, NumOfDuplicates: 0, SumTime: 0, AvgTime: 0, RequestsMemory: make([]string, 0, cfgServer.MemorySize), DuplicateChecker: make(map[string]struct{})}
 	server.StartServer(s, cfgServer)
 }
