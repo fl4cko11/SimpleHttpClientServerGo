@@ -12,7 +12,7 @@ type Server struct {
 	SumTime          int // Время храним в int просто домнажаем на 10^(-3), чтобы получать миллисекунды
 	AvgTime          int
 	RequestsMemory   []string            // Очередь обработки, не сохраняем целиком, а хешируем
-	DuplicateChecker map[string]struct{} // для поиска дубликатов
+	DuplicateChecker map[string]struct{} // для поиска дубликатов "struct{}", тк значения не важны
 }
 
 func (s *Server) readToMemory(HashBytes string, cfgServer *config.ServerConfig) {
@@ -24,7 +24,7 @@ func (s *Server) readToMemory(HashBytes string, cfgServer *config.ServerConfig) 
 }
 
 func (s *Server) clearProcessedEvent() {
-	s.RequestsMemory = s.RequestsMemory[1:]
+	s.RequestsMemory = s.RequestsMemory[1:] // удаляем по FIFO
 }
 
 func (s *Server) hashBytes(reqBytes []byte) string {

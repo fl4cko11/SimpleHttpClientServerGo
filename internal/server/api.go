@@ -17,7 +17,7 @@ func StartServer(s *Server, cfgServer *config.ServerConfig) {
 		return
 	}
 
-	http.HandleFunc("/endpoint", func(resp http.ResponseWriter, req *http.Request) {
+	http.HandleFunc("/endpoint", func(resp http.ResponseWriter, req *http.Request) { // анонимная функция для доступа к *Server
 		procTime := rand.Intn(490) + 10 // Задаём время обработки
 
 		defer req.Body.Close()
@@ -44,7 +44,7 @@ func StartServer(s *Server, cfgServer *config.ServerConfig) {
 		}
 		time.Sleep(time.Duration(procTime) * time.Millisecond) // даём время на обработку
 		// logs.PrintToLogFile(cfgServer.LogStorage, fmt.Sprintf("Декодированная информация из %d слота RAM: %+v", len(s.RequestsMemory)-1, decodedJson))
-		// --------------------------------------------------------------------------------------------------------------------------------------------
+		// ---------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 		s.serverMetrics(procTime, hashedBytes)
 		fmt.Printf("[Метрики сервера]\n Число обработанных: %v\n Число дубликатов: %v\n Среднее время обработки: %v мс\n", s.NumOfProcessed, s.NumOfDuplicates, s.AvgTime)
