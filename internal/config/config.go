@@ -15,13 +15,35 @@ type JSONStruct struct {
 	Status int       `json:"status"`
 }
 
-type YAMLStruct struct {
-	Url string `yaml:"url"`
+type ServerConfig struct {
+	Url        string `yaml:"url"`
+	LogStorage string `yaml:"logs_storage"`
 }
 
-func LoadConfig(filename string) (*YAMLStruct, error) {
-	var config YAMLStruct
-	data, err := os.ReadFile(filename) // байты из файла
+type ClientConfig struct {
+	LogStorage string `yaml:"logs_storage"`
+	Period     int    `yaml:"period"`
+}
+
+func LoadServerConfig(path string) (*ServerConfig, error) {
+	var config ServerConfig
+	data, err := os.ReadFile(path) // байты из файла
+	if err != nil {
+		fmt.Println("Ошибка считывания конфига", err)
+		return nil, err
+	}
+
+	err = yaml.Unmarshal(data, &config) // байты в соответсвющую структуру
+	if err != nil {
+		return nil, err
+	}
+
+	return &config, nil
+}
+
+func LoadClientConfig(path string) (*ClientConfig, error) {
+	var config ClientConfig
+	data, err := os.ReadFile(path) // байты из файла
 	if err != nil {
 		fmt.Println("Ошибка считывания конфига", err)
 		return nil, err

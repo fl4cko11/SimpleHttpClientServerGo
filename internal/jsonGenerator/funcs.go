@@ -3,7 +3,6 @@ package jsonGenerator
 import (
 	"ClientServerCP/internal/config"
 	"encoding/json"
-	"fmt"
 	"math/rand"
 	"time"
 
@@ -28,7 +27,6 @@ func CreateJson(numOfEvents int) ([]byte, bool) {
 
 	JSONResult, err := json.Marshal(jsonArray) // cериализуем массив в JSON
 	if err != nil {
-		fmt.Println("JSON coding err:", err)
 		return nil, false
 	}
 	return JSONResult, true

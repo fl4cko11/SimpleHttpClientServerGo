@@ -6,8 +6,7 @@ import (
 )
 
 func generateSleepTime() time.Duration {
-	sleepValue := rand.Intn(999) + 1                    // генерируем параметр периодичности сообщений
-	return time.Duration(sleepValue) * time.Millisecond // меняем размерность
+	return time.Duration(rand.Intn(999)+1) * time.Millisecond // генерируем параметр периодичности сообщений и меняем размерность на мс
 }
 
 func generateNumOfEvents() int {
